@@ -5,6 +5,9 @@ import shutil
 import os
 Host = "192.168.1.1"
 Port = 5000
+
+
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(Host,Port)
 server.listen(1)
