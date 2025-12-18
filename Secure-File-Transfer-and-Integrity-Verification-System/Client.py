@@ -35,8 +35,8 @@ client.connect((Host,Port))
 
 metadata = f"{log_file}|{file_size}|{file_hash}"
 client.sendall(metadata.encode())
-client.recv(1024)  # ACK from server
-
+ack = client.recv(1024)  # ACK from server
+print(ack.decode())
 #sending content of file
 with open(file_path, "rb") as f:
     while chunk := f.read(4096):
