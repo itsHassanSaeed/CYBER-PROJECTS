@@ -24,14 +24,14 @@ file_hash = hash_file(log_file)
 
 #establishing Connection
 
-Host = "192.168.1.1"
+Host = "127.0.0.1"
 Port = 5000
 
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect((Host,Port))
 
 #sending name of file
-client.send(log_file)
+client.send(log_file.encode())
 with open(file_path, "rb") as f:
     while chunk := f.read(4096):
         client.sendall(chunk)
