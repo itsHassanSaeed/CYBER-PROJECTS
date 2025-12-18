@@ -7,7 +7,8 @@ log_file = "logfile.txt"
 os.makedirs("files" , exist_ok=True)
 file_path = os.path.join("files",log_file)
 with open(file_path, "w") as f:
-    f.write("hello i am here:")
+    f.write("hello i am here!!")
+file_size = os.path.getsize(file_path)
 #Hashing file before sending
 def hash_file(path):
     sha256 = hashlib.sha256()
@@ -30,8 +31,13 @@ Port = 5000
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect((Host,Port))
 
-#sending name of file
-client.send(log_file.encode())
+#sending name of file,size and hash
+
+metadata = f"{log_file}|{file_size}|{file_hash}"
+client.sendall(metadata.encode())
+client.recv(1024)  # ACK from server
+
+#sending content of file
 with open(file_path, "rb") as f:
     while chunk := f.read(4096):
         client.sendall(chunk)
