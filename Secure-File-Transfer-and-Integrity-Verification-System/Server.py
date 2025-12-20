@@ -42,4 +42,7 @@ if server_hash == client_hash:
     print("File integrity verified")
 else:
     print("Warning: Hash mismatched")
+#file backup
+backup_file_path = os.path.join("incomingFiles", "backup_file.txt")
+shutil.copy2(log_file_path,backup_file_path)
 
