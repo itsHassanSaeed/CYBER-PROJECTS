@@ -6,19 +6,27 @@ import subprocess
 import threading
 import logging
 import re
-
+import argparse
 # ================= CONFIG =================
-HOST = "127.0.0.1"
-PORT = 5000
-AUTH_TOKEN = "SECURE_TOKEN_123"
+# ---------------- ARGPARSE ----------------
+parser = argparse.ArgumentParser(description="Secure File Transfer Server")
+parser.add_argument("--host", required=True, help="Server bind address")
+parser.add_argument("--port", type=int, required=True, help="Server port")
+parser.add_argument("--logfile", default="server.log", help="Log file name")
+
+args = parser.parse_args()
+
+HOST = args.host
+PORT = args.port
 BUFFER_SIZE = 4096
+AUTH_TOKEN = "SECURE_TOKEN_123"
 SAVE_DIR = "incomingFiles"
 
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 # ================= LOGGING =================
 logging.basicConfig(
-    filename="server.log",
+    filename=args.logfile,
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(threadName)s | %(message)s"
 )
